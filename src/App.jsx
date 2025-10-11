@@ -7,10 +7,10 @@ function App() {
     return (
         <Router>
             <Routes>
-                <Route path="/" element={<Inicio />} /> {}
+                <Route path="/" element={<Inicio />} />
                 <Route path="/reportes" element={<ReportesPage />} />
                 <Route path="/login" element={<div>Página de Login</div>} />
-                <Route path="/registro" element={<div>Página de Registro</div>} />
+                <Route path="/registro" element={<RegistroPracticas />} /> 
                 <Route path="/documentos" element={<Documentos/>} />
                 <Route path="*" element={<div>404 - No Encontrado</div>} />
             </Routes>
