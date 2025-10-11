@@ -1,7 +1,17 @@
 import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
 const Header = () => {
-    const activePath = 'reportes.html'; // Simulación de la ruta activa
+    const location = useLocation();
+
+    // 2. Definición de los elementos de navegación
+    const navItems = [
+        { name: 'Inicio', path: '/' },
+        { name: 'Reportes', path: '/reportes' },
+        { name: 'Login', path: '/login' },
+        { name: 'Registro', path: '/registro' },
+        { name: 'Documentos', path: '/documentos' },
+    ];
 
     // Las clases de Tailwind reemplazan tu CSS original
     return (
@@ -12,16 +22,17 @@ const Header = () => {
 
             <nav className="mt-2 w-full md:mt-0 md:w-auto">
                 <ul className="flex flex-col items-center gap-3 list-none p-0 md:flex-row md:gap-5">
-                    {/* Reemplaza <a> con un componente de Link de tu router (ej: <Link> de react-router-dom) */}
-                    {['index.html', 'login.html', 'registro.html', 'documentos.html', 'reportes.html'].map((link) => (
-                        <li key={link}>
-                            <a
-                                href={link} // Esto debería ser un componente Link en una app con Router
+                    {navItems.map((item) => (
+                        <li key={item.name}>
+                            {/* 3. Usamos <Link> en lugar de <a> */}
+                            <Link
+                                to={item.path}
+                                // 4. Comprobamos si la ruta actual (location.pathname) coincide con la ruta del ítem
                                 className={`font-semibold text-white no-underline transition duration-200 hover:underline 
-                                            ${link === activePath ? 'underline' : ''}`}
+                                            ${location.pathname === item.path ? 'underline font-extrabold' : ''}`}
                             >
-                                {link.replace('.html', '').charAt(0).toUpperCase() + link.replace('.html', '').slice(1)}
-                            </a>
+                                {item.name}
+                            </Link>
                         </li>
                     ))}
                 </ul>

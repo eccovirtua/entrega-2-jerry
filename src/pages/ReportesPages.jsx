@@ -14,13 +14,13 @@ const datosSemestres = {
 };
 
 const ReportesPage = () => {
-    // 1. Estado para el semestre activo (el que se ha clickeado)
+    // 1. Estado para el semestre activo
     const [semestreActivo, setSemestreActivo] = useState(null);
     // 2. Referencia para el elemento <canvas> y la instancia del gráfico
     const chartRef = useRef(null);
     const chartInstanceRef = useRef(null);
 
-    // Los datos de la tabla (para mapear en JSX)
+    // Los datos de la tabla
     const datosTabla = [
         { id: 1, nombre: "Semestre 2025-1", estudiantes: 120, notas: 5.1 },
         { id: 2, nombre: "Semestre 2025-2", estudiantes: 115, notas: 5.4 },
@@ -68,10 +68,10 @@ const ReportesPage = () => {
         };
     }, [semestreActivo]); // Se ejecuta cuando cambia el semestre activo
 
-    // Función de manejo del clic
     const handleClickSemestre = (id) => {
-        setSemestreActivo(id); // React se encargará de re-renderizar y actualizar el gráfico
+        setSemestreActivo(id);
     };
+
 
     return (
 
@@ -80,10 +80,8 @@ const ReportesPage = () => {
 
         }
             <main>
-                {/* Tabla de Reportes - Clase 'tabla-reportes' */}
                 <section className="mx-auto my-8 max-w-4xl p-4">
                     <table className="min-w-full border-collapse overflow-hidden rounded-lg shadow-lg">
-                        {/* Thead - Clase 'tablaSemestres th' */}
                         <thead>
                         <tr className="bg-gray-700 text-white">
                             <th className="p-3 text-center">Semestre</th>
@@ -92,7 +90,6 @@ const ReportesPage = () => {
                         </tr>
                         </thead>
                         <tbody>
-                        {/* Mapea los datos de la tabla */}
                         {datosTabla.map((data) => (
                             <tr
                                 key={data.id}
@@ -100,7 +97,6 @@ const ReportesPage = () => {
                                                ${semestreActivo === data.id ? 'bg-blue-100' : 'hover:bg-gray-100'}
                                                ${data.id % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
                             >
-                                {/* Celda del semestre - Clase 'semestre' con la lógica de click */}
                                 <td
                                     className="cursor-pointer p-3 text-center font-bold text-blue-600 underline hover:text-blue-800"
                                     onClick={() => handleClickSemestre(data.id)}
@@ -116,18 +112,14 @@ const ReportesPage = () => {
                     </table>
                 </section>
 
-                {/* Gráfico de Reportes - Clase 'grafico-reportes' */}
                 <section className="mx-auto my-12 max-w-4xl p-4 text-center">
                     <h2 className="mb-4 text-xl font-semibold">Gráfico del Semestre {semestreActivo || '(Selecciona uno)'}</h2>
                     <div className="rounded-lg bg-white p-4 shadow-lg">
-                        {/* El <canvas> usa la referencia para Chart.js */}
                         <canvas id="reportChart" ref={chartRef}></canvas>
                     </div>
                 </section>
             </main>
-
             <Footer /> {
-
         }
         </div>
     );
