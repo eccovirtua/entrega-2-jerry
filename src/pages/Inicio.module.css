@@ -1,6 +1,6 @@
 .root {
   min-height: 100vh;
-  background-color: #f9fafb; /* bg-gray-50 */
+  background-color: #f9fafb;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -13,15 +13,15 @@
   justify-content: center;
 }
 .title {
-  font-size: 2.25rem; /* text-4xl */
+  font-size: 2.25rem;
   font-weight: 700;
-  color: #374151; /* text-gray-700 */
+  color: #374151;
   margin-bottom: 1rem;
   text-align: center;
 }
 .subtitle {
-  font-size: 1.125rem; /* text-lg */
-  color: #4b5563; /* text-gray-600 */
+  font-size: 1.125rem;
+  color: #4b5563;
   margin-bottom: 2rem;
   text-align: center;
   max-width: 36rem;
@@ -32,7 +32,7 @@
   margin-bottom: 2.5rem;
 }
 .button {
-  background-color: #2563eb; /* bg-blue-600 */
+  background-color: #2563eb;
   color: #fff;
   font-weight: 700;
   padding: 0.5rem 1.5rem;
@@ -42,7 +42,7 @@
   cursor: pointer;
 }
 .button:hover {
-  background-color: #1d4ed8; /* hover:bg-blue-700 */
+  background-color: #1d4ed8;
 }
 .cards {
   display: flex;
@@ -83,4 +83,315 @@
 }
 .cardText {
   color: #374151;
+}
+
+.loginBox {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 24px 0 #0001;
+  padding: 2rem;
+  max-width: 400px;
+  margin: 2rem auto;
+}
+
+.loginTitle {
+  text-align: center;
+  color: #155293;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.loginLabel {
+  color: #000000;
+  font-weight: 700;
+  display: block;
+  margin-bottom: 0.5rem;
+}
+
+.loginInput {
+  width: 100%;
+  margin: 0.5rem 0 1rem 0;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  font-weight: 400;
+}
+
+.loginError {
+  color: #b91c1c;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.loginForgot {
+  text-align: center;
+  font-size: 0.95rem;
+  margin-top: 0.5rem;
+}
+
+.loginLink {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+.docContainer {
+  width: 100%;
+  max-width: 900px;
+  margin: 2rem auto;
+}
+
+.docTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #155293;
+  margin-bottom: 0.5rem;
+  text-align: left;
+}
+
+.docSubtitle {
+  color: #4b5563;
+  margin-bottom: 2rem;
+  font-size: 1.125rem;
+}
+
+.docTableWrapper {
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 24px 0 #0001;
+  overflow-x: auto;
+  margin-bottom: 2rem;
+}
+
+.docTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.docTable th, .docTable td {
+  padding: 1rem;
+  text-align: left;
+  font-size: 1rem;
+}
+
+.docTable th {
+  background: #e8f0fe;
+  color: #155293;
+  font-weight: 700;
+}
+
+.docTableRow:nth-child(even) {
+  background: #f9fafb;
+}
+
+.docTableRow:nth-child(odd) {
+  background: #fff;
+}
+
+.docTableEmpty {
+  text-align: center;
+  color: #b0b0b0;
+  padding: 2rem 0;
+}
+
+.docIcon {
+  color: #e11d48;
+  margin-right: 0.5rem;
+}
+
+.docFormBox {
+  background: #fff;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 24px 0 #0001;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.docFormTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #155293;
+  margin-bottom: 1rem;
+}
+
+.docForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.successMsg {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  background: #f0fdf4;
+  color: #15803d;
+  border: 1px solid #bbf7d0;
+  text-align: center;
+}
+
+.errorMsg {
+  margin-top: 1rem;
+  padding: 0.75rem;
+  border-radius: 0.375rem;
+  background: #fef2f2;
+  color: #b91c1c;
+  border: 1px solid #fecaca;
+  text-align: center;
+}
+
+.registroBox {
+  background: #fff;
+  border-radius: 0.75rem;
+  box-shadow: 0 4px 24px 0 #0001;
+  padding: 2rem;
+  max-width: 600px;
+  margin: 2rem auto;
+}
+
+.registroTitle {
+  text-align: center;
+  color: #155293;
+  font-weight: 700;
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.registroForm {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.registroLabel {
+  color: #374151;
+  font-weight: 600;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+.registroInput {
+  width: 100%;
+  margin-bottom: 0.25rem;
+  padding: 0.5rem;
+  border-radius: 0.25rem;
+  border: 1px solid #ccc;
+  font-weight: 400;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+
+.inputError {
+  border-color: #ef4444 !important;
+  box-shadow: 0 0 0 2px #fecaca;
+}
+
+.inputOk {
+  border-color: #22c55e !important;
+  box-shadow: 0 0 0 2px #bbf7d0;
+}
+
+.inputReadOnly {
+  background: #f3f4f6;
+  color: #6b7280;
+}
+
+.registroError {
+  color: #b91c1c;
+  font-size: 0.95rem;
+  margin-top: 0.1rem;
+}
+
+.registroFechas {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+@media (max-width: 640px) {
+  .registroFechas {
+    grid-template-columns: 1fr;
+  }
+}
+
+.reportSection {
+  margin: 2rem auto;
+  max-width: 64rem;
+  padding: 1rem;
+  width: 100%;
+}
+
+.reportTable {
+  min-width: 100%;
+  border-collapse: collapse;
+  overflow: hidden;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 24px 0 #0001;
+  background: #fff;
+}
+
+.reportTableHeadRow {
+  background: #1e293b;
+  color: #fff;
+}
+
+.reportTableHead {
+  padding: 0.75rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.reportTableRow {
+  border-bottom: 1px solid #e5e7eb;
+  transition: background 0.15s;
+}
+
+.reportTableRowOdd {
+  background: #f9fafb;
+}
+
+.reportTableRowEven {
+  background: #fff;
+}
+
+.reportTableRowActive {
+  background: #dbeafe !important;
+}
+
+.reportTableLink {
+  cursor: pointer;
+  font-weight: bold;
+  color: #2563eb;
+  text-decoration: underline;
+  transition: color 0.2s;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.reportTableLink:hover {
+  color: #1d4ed8;
+}
+
+.reportTableCell {
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.reportChartSection {
+  margin: 3rem auto 0 auto;
+  max-width: 64rem;
+  padding: 1rem;
+  text-align: center;
+  width: 100%;
+}
+
+.reportChartTitle {
+  margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.reportChartBox {
+  border-radius: 0.5rem;
+  background: #fff;
+  padding: 1rem;
+  box-shadow: 0 4px 24px 0 #0001;
 }

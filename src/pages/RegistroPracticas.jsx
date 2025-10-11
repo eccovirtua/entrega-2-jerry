@@ -1,5 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import Header from '../components/Header.jsx';
+import Footer from '../components/Footer.jsx';
+import styles from './Inicio.module.css';
 
 export default function RegistroPracticas() {
   const [form, setForm] = useState({
@@ -97,36 +100,14 @@ export default function RegistroPracticas() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
-      {/* HEADER */}
-      <header className="bg-blue-800 text-white py-4 shadow-md">
-        <div className="container mx-auto flex flex-col sm:flex-row justify-between items-center px-4">
-          <div className="flex items-center gap-3">
-            <img src="/vite.svg" alt="Logo" className="w-10 h-10" />
-            <h1 className="text-xl font-semibold">
-              Sistema de Gestión de Prácticas
-            </h1>
-          </div>
-          <nav className="mt-2 sm:mt-0">
-            <ul className="flex gap-4 text-sm">
-              <li><Link to="/" className="hover:text-yellow-300">Inicio</Link></li>
-              <li><Link to="/login" className="hover:text-yellow-300">Login</Link></li>
-              <li><Link to="/registro" className="font-bold text-yellow-400">Registro</Link></li>
-              <li><Link to="/documentos" className="hover:text-yellow-300">Documentación</Link></li>
-              <li><Link to="/reportes" className="hover:text-yellow-300">Reportes</Link></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
-
-      {/* FORMULARIO */}
-      <main className="flex-grow flex items-center justify-center py-10 px-4">
-        <div className="bg-white shadow-lg rounded-lg p-8 w-full max-w-2xl">
-          <h2 className="text-2xl font-semibold text-center mb-6 text-gray-800">
+    <div className={styles.root}>
+      <Header />
+      <main className={styles.main}>
+        <div className={styles.registroBox}>
+          <h2 className={styles.registroTitle}>
             Registrar Práctica
           </h2>
-
-          <form onSubmit={handleSubmit} className="space-y-4">
+          <form onSubmit={handleSubmit} className={styles.registroForm}>
             {[
               { id: "nombre", label: "Nombre Alumno", type: "text", placeholder: "Ej: Juan Pérez" },
               { id: "rut", label: "RUT", type: "text", placeholder: "Ej: 21200157-0" },
@@ -138,41 +119,31 @@ export default function RegistroPracticas() {
               { id: "correo_empresa", label: "Correo Empresa", type: "email", placeholder: "Ej: empresa@correo.cl" },
             ].map((campo) => (
               <div key={campo.id}>
-                <label className="block text-gray-700 font-medium mb-1">{campo.label}:</label>
+                <label className={styles.registroLabel}>{campo.label}:</label>
                 <input
                   id={campo.id}
                   type={campo.type}
                   placeholder={campo.placeholder}
                   value={form[campo.id]}
                   onChange={handleChange}
-                  className={`w-full border rounded-md p-2 focus:outline-none transition ${
-                    errors[campo.id]
-                      ? "border-red-500 focus:ring-2 focus:ring-red-400"
-                      : form[campo.id]
-                      ? "border-green-400 focus:ring-2 focus:ring-green-300"
-                      : "border-gray-300 focus:ring-2 focus:ring-blue-400"
-                  }`}
+                  className={`${styles.registroInput} ${errors[campo.id] ? styles.inputError : form[campo.id] ? styles.inputOk : ""}`}
                   required
                 />
                 {errors[campo.id] && (
-                  <p className="text-red-500 text-sm mt-1">{errors[campo.id]}</p>
+                  <p className={styles.registroError}>{errors[campo.id]}</p>
                 )}
               </div>
             ))}
 
             {/* Tipo de práctica */}
             <div>
-              <label className="block text-gray-700 font-medium mb-1">Tipo de práctica:</label>
+              <label className={styles.registroLabel}>Tipo de práctica:</label>
               <select
                 id="tipo_practica"
                 value={form.tipo_practica}
                 onChange={handleChange}
                 required
-                className={`w-full border rounded-md p-2 focus:outline-none transition ${
-                  errors.tipo_practica
-                    ? "border-red-500 focus:ring-red-400"
-                    : "border-gray-300 focus:ring-blue-500"
-                }`}
+                className={styles.registroInput}
               >
                 <option value="">Seleccione...</option>
                 <option value="laboral">Laboral (240 hrs)</option>
@@ -181,26 +152,26 @@ export default function RegistroPracticas() {
             </div>
 
             {/* Fechas */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className={styles.registroFechas}>
               <div>
-                <label className="block text-gray-700 font-medium mb-1">Fecha inicio:</label>
+                <label className={styles.registroLabel}>Fecha inicio:</label>
                 <input
                   type="date"
                   id="fecha_inicio"
                   value={form.fecha_inicio}
                   onChange={handleChange}
                   required
-                  className="w-full border border-gray-300 rounded-md p-2"
+                  className={styles.registroInput}
                 />
               </div>
               <div>
-                <label className="block text-gray-700 font-medium mb-1">Fecha término:</label>
+                <label className={styles.registroLabel}>Fecha término:</label>
                 <input
                   type="date"
                   id="fecha_termino"
                   value={form.fecha_termino}
                   readOnly
-                  className="w-full border border-gray-300 rounded-md p-2 bg-gray-100"
+                  className={styles.registroInput + " " + styles.inputReadOnly}
                 />
               </div>
             </div>
@@ -208,18 +179,15 @@ export default function RegistroPracticas() {
             {/* Botón */}
             <button
               type="submit"
-              className="w-full bg-blue-700 text-white font-semibold py-2 rounded-md hover:bg-blue-800 transition-colors"
+              className={styles.button}
+              style={{ width: '100%' }}
             >
               Guardar Práctica
             </button>
           </form>
         </div>
       </main>
-
-      {/* FOOTER */}
-      <footer className="bg-gray-800 text-white py-4 text-center text-sm mt-auto">
-        &copy; 2025 Sistema de Prácticas - Escuela de Informática
-      </footer>
+      <Footer />
     </div>
   );
 }

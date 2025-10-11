@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
+import styles from './Inicio.module.css';
 
 /**
  * Página de administración de documentos de práctica
@@ -47,134 +48,114 @@ const DocumentosPage = () => {
   };
 
   return (
-    <div className="min-h-screen flex flex-col bg-gray-50">
+    <div className={styles.root}>
       <Header />
+      <main className={styles.main}>
+        <div className={styles.docContainer}>
+          <h1 className={styles.docTitle}>
+            Repositorio de Documentos de Práctica
+          </h1>
+          <p className={styles.docSubtitle}>
+            Descarga y carga de informes en PDF asociados a los alumnos. 
+            Solo docentes y coordinadores pueden subir documentos.
+          </p>
 
-      {/* MAIN CONTENT */}
-      <main className="flex-1 max-w-4xl mx-auto w-full px-4 py-8">
-        {/* Título y descripción */}
-        <h1 className="text-3xl font-bold text-gray-800 mb-3">
-          Repositorio de Documentos de Práctica
-        </h1>
-        <p className="text-gray-600 mb-8 text-lg">
-          Descarga y carga de informes en PDF asociados a los alumnos. 
-          Solo docentes y coordinadores pueden subir documentos.
-        </p>
-
-        {/* TABLA DE DOCUMENTOS */}
-        <div className="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
-          <table className="min-w-full">
-            <thead className="bg-blue-50">
-              <tr>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Alumno
-                </th>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Documento
-                </th>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Fecha
-                </th>
-                <th className="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                  Acciones
-                </th>
-              </tr>
-            </thead>
-            <tbody className="bg-white divide-y divide-gray-200">
-              {documentos.length === 0 ? (
+          {/* TABLA DE DOCUMENTOS */}
+          <div className={styles.docTableWrapper}>
+            <table className={styles.docTable}>
+              <thead>
                 <tr>
-                  <td colSpan="4" className="py-8 text-center text-gray-400">
-                    No hay documentos subidos.
-                  </td>
+                  <th>Alumno</th>
+                  <th>Documento</th>
+                  <th>Fecha</th>
+                  <th>Acciones</th>
                 </tr>
-              ) : (
-                documentos.map((doc, idx) => (
-                  <tr key={idx} className="hover:bg-gray-50 transition-colors">
-                    <td className="py-4 px-6 text-sm font-medium text-gray-900">
-                      {doc.alumno}
-                    </td>
-                    <td className="py-4 px-6 text-sm text-gray-900">
-                      <div className="flex items-center space-x-2">
-                        <span className="text-red-500">📄</span>
-                        <span>{doc.nombre}</span>
-                      </div>
-                    </td>
-                    <td className="py-4 px-6 text-sm text-gray-500">
-                      {doc.fecha}
-                    </td>
-                    <td className="py-4 px-6 text-sm font-medium">
-                      <a
-                        href="#"
-                        className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md transition-colors"
-                        download
-                      >
-                        Descargar
-                      </a>
+              </thead>
+              <tbody>
+                {documentos.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" className={styles.docTableEmpty}>
+                      No hay documentos subidos.
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
-        </div>
+                ) : (
+                  documentos.map((doc, idx) => (
+                    <tr key={idx} className={styles.docTableRow}>
+                      <td>{doc.alumno}</td>
+                      <td>
+                        <span className={styles.docIcon}>📄</span>
+                        <span>{doc.nombre}</span>
+                      </td>
+                      <td>{doc.fecha}</td>
+                      <td>
+                        <a
+                          href="#"
+                          className={styles.button}
+                          download
+                        >
+                          Descargar
+                        </a>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
 
-        {/* FORMULARIO DE SUBIDA */}
-        <div className="bg-white rounded-lg shadow-lg p-6">
-          <h2 className="text-xl font-semibold text-gray-800 mb-4">
-            Subir nuevo informe (PDF)
-          </h2>
-          
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="alumno" className="block text-sm font-medium text-gray-700 mb-1">
-                Alumno:
-              </label>
-              <input
-                type="text"
-                id="alumno"
-                value={alumno}
-                onChange={(e) => setAlumno(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-                placeholder="Nombre completo del alumno"
-                required
-              />
-            </div>
-
-            <div>
-              <label htmlFor="documento-input" className="block text-sm font-medium text-gray-700 mb-1">
-                Selecciona PDF:
-              </label>
-              <input
-                type="file"
-                id="documento-input"
-                accept="application/pdf"
-                onChange={(e) => setFile(e.target.files[0])}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100"
-                required
-              />
-            </div>
-
-            <button
-              type="submit"
-              className="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition-colors"
-            >
-              Subir Documento
-            </button>
-          </form>
-
-          {/* Mensaje de estado */}
-          {mensaje && (
-            <div className={`mt-4 p-3 rounded-md ${
-              mensaje.includes("correctamente")
-                ? "bg-green-50 text-green-700 border border-green-200"
-                : "bg-red-50 text-red-700 border border-red-200"
-            }`}>
-              {mensaje}
-            </div>
-          )}
+          {/* FORMULARIO DE SUBIDA */}
+          <div className={styles.docFormBox}>
+            <h2 className={styles.docFormTitle}>
+              Subir nuevo informe (PDF)
+            </h2>
+            <form onSubmit={handleSubmit} className={styles.docForm}>
+              <div>
+                <label htmlFor="alumno" className={styles.loginLabel}>
+                  Alumno:
+                </label>
+                <input
+                  type="text"
+                  id="alumno"
+                  value={alumno}
+                  onChange={(e) => setAlumno(e.target.value)}
+                  className={styles.loginInput}
+                  placeholder="Nombre completo del alumno"
+                  required
+                />
+              </div>
+              <div>
+                <label htmlFor="documento-input" className={styles.loginLabel}>
+                  Selecciona PDF:
+                </label>
+                <input
+                  type="file"
+                  id="documento-input"
+                  accept="application/pdf"
+                  onChange={(e) => setFile(e.target.files[0])}
+                  className={styles.loginInput}
+                  required
+                />
+              </div>
+              <button
+                type="submit"
+                className={styles.button}
+                style={{ width: '100%' }}
+              >
+                Subir Documento
+              </button>
+            </form>
+            {mensaje && (
+              <div className={
+                mensaje.includes("correctamente")
+                  ? styles.successMsg
+                  : styles.errorMsg
+              }>
+                {mensaje}
+              </div>
+            )}
+          </div>
         </div>
       </main>
-
       <Footer />
     </div>
   );

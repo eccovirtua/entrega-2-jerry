@@ -5,6 +5,7 @@ import Chart from 'chart.js/auto';
 // // Componentes de la estructura
 import Header from '../components/Header.jsx';
 import Footer from '../components/Footer.jsx';
+import styles from './Inicio.module.css';
 
 // Datos de ejemplo
 const datosSemestres = {
@@ -74,53 +75,53 @@ const ReportesPage = () => {
 
 
     return (
-
-        <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
-            <Header /> {
-
-        }
-            <main>
-                <section className="mx-auto my-8 max-w-4xl p-4">
-                    <table className="min-w-full border-collapse overflow-hidden rounded-lg shadow-lg">
+        <div className={styles.root}>
+            <Header />
+            <main className={styles.main}>
+                <section className={styles.reportSection}>
+                    <table className={styles.reportTable}>
                         <thead>
-                        <tr className="bg-gray-700 text-white">
-                            <th className="p-3 text-center">Semestre</th>
-                            <th className="p-3 text-center">Estudiantes</th>
-                            <th className="p-3 text-center">Notas promedio</th>
-                        </tr>
+                            <tr className={styles.reportTableHeadRow}>
+                                <th className={styles.reportTableHead}>Semestre</th>
+                                <th className={styles.reportTableHead}>Estudiantes</th>
+                                <th className={styles.reportTableHead}>Notas promedio</th>
+                            </tr>
                         </thead>
                         <tbody>
-                        {datosTabla.map((data) => (
-                            <tr
-                                key={data.id}
-                                className={`border-b border-gray-200 transition duration-150 ease-in-out
-                                               ${semestreActivo === data.id ? 'bg-blue-100' : 'hover:bg-gray-100'}
-                                               ${data.id % 2 === 0 ? 'bg-white' : 'bg-gray-50'}`}
-                            >
-                                <td
-                                    className="cursor-pointer p-3 text-center font-bold text-blue-600 underline hover:text-blue-800"
-                                    onClick={() => handleClickSemestre(data.id)}
-                                    data-semestre={data.id}
+                            {datosTabla.map((data, idx) => (
+                                <tr
+                                    key={data.id}
+                                    className={[
+                                        styles.reportTableRow,
+                                        semestreActivo === data.id ? styles.reportTableRowActive : '',
+                                        idx % 2 === 0 ? styles.reportTableRowOdd : styles.reportTableRowEven
+                                    ].join(' ')}
                                 >
-                                    {data.nombre}
-                                </td>
-                                <td className="p-3 text-center">{data.estudiantes}</td>
-                                <td className="p-3 text-center">{data.notas}</td>
-                            </tr>
-                        ))}
+                                    <td
+                                        className={styles.reportTableLink}
+                                        onClick={() => handleClickSemestre(data.id)}
+                                        data-semestre={data.id}
+                                    >
+                                        {data.nombre}
+                                    </td>
+                                    <td className={styles.reportTableCell}>{data.estudiantes}</td>
+                                    <td className={styles.reportTableCell}>{data.notas}</td>
+                                </tr>
+                            ))}
                         </tbody>
                     </table>
                 </section>
 
-                <section className="mx-auto my-12 max-w-4xl p-4 text-center">
-                    <h2 className="mb-4 text-xl font-semibold">Gráfico del Semestre {semestreActivo || '(Selecciona uno)'}</h2>
-                    <div className="rounded-lg bg-white p-4 shadow-lg">
+                <section className={styles.reportChartSection}>
+                    <h2 className={styles.reportChartTitle}>
+                        Gráfico del Semestre {semestreActivo || '(Selecciona uno)'}
+                    </h2>
+                    <div className={styles.reportChartBox}>
                         <canvas id="reportChart" ref={chartRef}></canvas>
                     </div>
                 </section>
             </main>
-            <Footer /> {
-        }
+            <Footer />
         </div>
     );
 };
