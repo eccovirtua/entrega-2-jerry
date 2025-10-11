@@ -75,7 +75,7 @@ const ReportesPage = () => {
 
     return (
 
-        <div className="min-h-screen bg-gray-50 font-sans">
+        <div className="min-h-screen bg-gray-50 flex flex-col justify-between">
             <Header /> {
 
         }
