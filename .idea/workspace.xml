@@ -5,14 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="921eb462-6270-47eb-8cf9-5329dce37441" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/src/controllers/reporteControlador.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/models/reporteModel.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/src/routes/reporteRutas.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/api/reportes.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/controllers/reporteControlador.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/controllers/reporteControlador.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/src/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/db.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/pages/ReportesPages.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/ReportesPages.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/models/reporteModel.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/models/reporteModel.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,6 +38,9 @@
     &quot;accountId&quot;: &quot;8367d54d-fb5b-4f59-b762-c4078d819625&quot;
   }
 }</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/backend/src/controllers/reporteControlador.js" root0="SKIP_INSPECTION" />
+  </component>
   <component name="ProjectColorInfo">{
   &quot;associatedIndex&quot;: 1
 }</component>
@@ -66,6 +65,7 @@
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
     "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings",
+    "ts.external.directory.path": "C:\\Program Files\\JetBrains\\WebStorm 2025.1\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }
 }]]></component>
@@ -94,7 +94,7 @@
       <workItem from="1760185101338" duration="3454000" />
       <workItem from="1762784835603" duration="3282000" />
       <workItem from="1762789667621" duration="25000" />
-      <workItem from="1762789741509" duration="5582000" />
+      <workItem from="1762789741509" duration="8074000" />
     </task>
     <servers />
   </component>

@@ -1,9 +1,9 @@
 import Reporte from '../models/reporteModel.js';
 
 /*
- * Función de "seeding" (semilla).
- * Se usa para poblar la base de datos si está vacía.
- * Así tendrás datos para mostrar en el frontend la primera vez.
+ * Función de "seeding" (semilla) - Versión 3
+ * Esta versión intenta insertar los datos. Si fallan porque
+ * ya existen (error 11000), simplemente ignora el error.
  */
 const seedDatosIniciales = async () => {
     try {
@@ -28,29 +28,34 @@ const seedDatosIniciales = async () => {
             },
         ];
 
-        // Inserta los datos semilla en la colección 'reportes'
+        // Intentamos insertar los 3 documentos
         await Reporte.insertMany(datosSemilla);
         console.log(">>> Base de datos poblada con datos de reportes.");
+
     } catch (error) {
-        console.error("Error poblando la base de datos:", error);
+        // El código 11000 es "E11000 duplicate key error" (error de llave duplicada).
+        if (error.code === 11000) {
+            // Esto es un "error" esperado. Significa que los datos ya existen.
+            // Lo ignoramos y continuamos con éxito.
+            // console.log(">>> Los datos semilla ya existen.");
+        } else {
+            // Si es un error diferente, sí lo mostramos.
+            console.error("Error poblando la base de datos:", error);
+        }
     }
 };
 
 /*
  * Controlador para OBTENER TODOS los reportes (para la tabla).
- * Se conectará a MongoDB y buscará los documentos.
  */
 export const getReportes = async (req, res) => {
     try {
-        // Usamos Mongoose (find()) para buscar TODOS los reportes
-        let reportes = await Reporte.find().select('nombre estudiantes notaPromedio');
+        // 1. Siempre llamamos a la función semilla.
+        //    (Es segura, solo insertará si la BD está vacía).
+        await seedDatosIniciales();
 
-        // Si la base de datos está vacía, la poblamos por primera vez
-        if (reportes.length === 0) {
-            await seedDatosIniciales();
-            // Volvemos a buscar los datos después de poblarlos
-            reportes = await Reporte.find().select('nombre estudiantes notaPromedio');
-        }
+        // 2. Buscamos los reportes (ahora garantizado que solo hay 3).
+        const reportes = await Reporte.find({}, 'nombre estudiantes notaPromedio');
 
         res.json(reportes);
     } catch (error) {
@@ -60,20 +65,18 @@ export const getReportes = async (req, res) => {
 
 /*
  * Controlador para OBTENER LOS DATOS DE UN GRÁFICO (por ID).
- * Se conectará a MongoDB y buscará UN documento por su ID.
+ * (Esta función no cambia)
  */
 export const getGraficoReporte = async (req, res) => {
     try {
-        const { id } = req.params; // Obtenemos el ID de la URL
+        const { id } = req.params;
 
-        // Usamos Mongoose (findById()) para buscar un reporte específico
-        const reporte = await Reporte.findById(id).select('nombre datosGrafico labelsGrafico');
+        const reporte = await Reporte.findById(id, 'nombre datosGrafico labelsGrafico');
 
         if (!reporte) {
             return res.status(404).json({ message: "Reporte no encontrado" });
         }
 
-        // Devolvemos solo los datos necesarios para el gráfico
         res.json({
             nombre: reporte.nombre,
             datosGrafico: reporte.datosGrafico,
