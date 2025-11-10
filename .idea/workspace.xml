@@ -93,11 +93,16 @@
       <workItem from="1760185101338" duration="3454000" />
       <workItem from="1762784835603" duration="3282000" />
       <workItem from="1762789667621" duration="25000" />
-      <workItem from="1762789741509" duration="2520000" />
+      <workItem from="1762789741509" duration="2811000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$/frontend" />
+    </ignored-roots>
   </component>
 </project>
