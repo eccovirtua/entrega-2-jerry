@@ -1,20 +1,20 @@
-import express from "express"
-import morgan from "morgan"
-import cors from 'cors'
-import router from './routes/authRutas.js'
-import prodRutas from './routes/prodRutas.js'
-import authRutas from './routes/authRutas.js'
+import express from "express";
+import morgan from "morgan";
+import cors from 'cors';
+import authRutas from './routes/authRutas.js';
+import reporteRutas from './routes/reporteRutas.js'; //importar rutas de reportes
 
+const app = express();
 
-
-const app = express()
+// Middlewares
 app.use(cors({
     origin: 'http://localhost:5173'
-}))
-app.use(morgan("dev"))
-app.use(express.json())
-app.use('/api',router)
-app.use(authRutas)
-app.use('/api',prodRutas)
+}));
+app.use(morgan("dev"));
+app.use(express.json()); // Permite a Express entender JSON
 
-export default app
+// Rutas del API
+app.use('/api', authRutas);     // Rutas para /api/registro, /api/login
+app.use('/api', reporteRutas);
+
+export default app;

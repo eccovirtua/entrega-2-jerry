@@ -5,13 +5,14 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="921eb462-6270-47eb-8cf9-5329dce37441" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/frontend/src/api/auth.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/api/axios.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/api/prods.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/frontend/src/context/ProdContext.jsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/frontend/src/App.css" beforeDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/controllers/reporteControlador.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/models/reporteModel.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/backend/src/routes/reporteRutas.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/frontend/src/api/reportes.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/backend/src/db.js" beforeDir="false" afterPath="$PROJECT_DIR$/backend/src/db.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/frontend/src/pages/ReportesPages.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/frontend/src/pages/ReportesPages.jsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,7 +27,7 @@
     </option>
   </component>
   <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/frontend" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
     <option name="ROOT_SYNC" value="SYNC" />
   </component>
   <component name="GitHubPullRequestSearchHistory">{
@@ -93,7 +94,7 @@
       <workItem from="1760185101338" duration="3454000" />
       <workItem from="1762784835603" duration="3282000" />
       <workItem from="1762789667621" duration="25000" />
-      <workItem from="1762789741509" duration="2811000" />
+      <workItem from="1762789741509" duration="5582000" />
     </task>
     <servers />
   </component>
