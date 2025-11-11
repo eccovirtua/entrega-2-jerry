@@ -1,10 +1,6 @@
 import Reporte from '../models/reporteModel.js';
 
-/*
- * Función de "seeding" (semilla) - Versión 3
- * Esta versión intenta insertar los datos. Si fallan porque
- * ya existen (error 11000), simplemente ignora el error.
- */
+
 const seedDatosIniciales = async () => {
     try {
         const datosSemilla = [
