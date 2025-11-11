@@ -21,3 +21,27 @@ export const registro = async (req,res) => {
 export const login = (req,res) => {
     res.send("Login")
 }
+
+// Middleware de autenticación simple
+export const authMiddleware = async (req, res, next) => {
+    try {
+        // Simulación simple de autenticación
+        // En una implementación real, verificarías JWT o sesión
+        const userId = req.headers['user-id'];
+        
+        if (!userId) {
+            return res.status(401).json({ message: 'No autorizado' });
+        }
+
+        // Para simplificar, aceptamos cualquier user-id válido de MongoDB
+        // En una implementación real, verificarías que el usuario existe
+        if (userId.length !== 24) {
+            return res.status(401).json({ message: 'ID de usuario inválido' });
+        }
+
+        req.user = { id: userId };
+        next();
+    } catch (error) {
+        res.status(401).json({ message: 'No autorizado' });
+    }
+};
