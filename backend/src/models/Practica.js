@@ -1,7 +1,7 @@
 import mongoose from 'mongoose';
 
 const practicaSchema = new mongoose.Schema({
-  user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'Usuario', required: true },
   userSnapshot: {
     nombre: String,
     correo: String,
@@ -14,12 +14,13 @@ const practicaSchema = new mongoose.Schema({
   correoEmpresa: { type: String, required: true, trim: true },
   tipoPractica: { type: String, enum: ['laboral','profesional'], default: 'laboral' },
   fechaInicio: { type: Date, required: true },
+  fechaTermino: { type: Date, required: false },
 }, { timestamps: true });
 
 practicaSchema.pre('save', async function(next) {
   if (this.isModified('user') && !this.userSnapshot) {
-    const User = mongoose.model('User');
-    const u = await User.findById(this.user).select('nombre correo rut carrera').lean();
+    const Usuario = mongoose.model('Usuario');
+    const u = await Usuario.findById(this.user).select('nombre correo rut carrera').lean();
     if (u) {
       this.userSnapshot = { nombre: u.nombre, correo: u.correo, rut: u.rut, carrera: u.carrera };
     }

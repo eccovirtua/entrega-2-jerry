@@ -7,10 +7,6 @@ import styles from "./Inicio.module.css";
 
 export default function RegistroPracticas() {
   const [form, setForm] = useState({
-    nombre: "",
-    rut: "",
-    carrera: "",
-    correo: "",
     tipo_practica: "",
     fecha_inicio: "",
     fecha_termino: "",
@@ -24,6 +20,13 @@ export default function RegistroPracticas() {
 
   const [errors, setErrors] = useState({});
   const [submitting, setSubmitting] = useState(false);
+  const [user, setUser] = useState(null);
+
+  // Cargar usuario si está en sesión (opcional)
+  useEffect(() => {
+    const u = localStorage.getItem("user");
+    if (u) setUser(JSON.parse(u));
+  }, []);
 
   // Cálculo automático de fecha de término (solo visual)
   useEffect(() => {
@@ -39,31 +42,22 @@ export default function RegistroPracticas() {
     }
   }, [form.fecha_inicio, form.tipo_practica]);
 
-  // Validaciones campo a campo
+  // Validaciones campo a campo (solo empresa)
   const validateField = (id, value) => {
     let error = "";
     const emailRe = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    const rutRe = /^[0-9]+-[0-9kK]$/;
     const telRe = /^\d{8,12}$/;
 
     switch (id) {
-      case "nombre":
-        if (!value?.trim() || value.length < 3) error = "El nombre es obligatorio";
-        break;
-      case "rut":
-        if (!rutRe.test(value || "")) error = "Formato inválido (Ej: 12345678-9)";
-        break;
-      case "correo":
-      case "correo_empresa":
-        if (!emailRe.test(value || "")) error = "Correo inválido";
+      case "empresa":
+      case "jefe":
+        if (!value?.trim()) error = "Campo obligatorio";
         break;
       case "telefono":
         if (!telRe.test(value || "")) error = "Debe tener entre 8 y 12 dígitos numéricos";
         break;
-      case "empresa":
-      case "jefe":
-      case "carrera":
-        if (!value?.trim()) error = "Campo obligatorio";
+      case "correo_empresa":
+        if (!emailRe.test(value || "")) error = "Correo inválido";
         break;
       case "tipo_practica":
         if (!value) error = "Seleccione tipo";
@@ -88,12 +82,8 @@ export default function RegistroPracticas() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Revalidar todo de una vez
+    // Revalidar campos de empresa
     const camposAValidar = [
-      "nombre",
-      "rut",
-      "carrera",
-      "correo",
       "empresa",
       "jefe",
       "telefono",
@@ -104,17 +94,11 @@ export default function RegistroPracticas() {
     const nuevosErrores = {};
     camposAValidar.forEach((c) => {
       const val = form[c];
-      let before = errors[c];
-      validateField(c, val);
-      // El estado de errors se actualiza async; acumulamos manualmente:
-      if (c === "nombre" && (!val?.trim() || val.length < 3)) nuevosErrores[c] = "El nombre es obligatorio";
-      if (c === "rut" && !/^[0-9]+-[0-9kK]$/.test(val || "")) nuevosErrores[c] = "Formato inválido (Ej: 12345678-9)";
-      if ((c === "correo" || c === "correo_empresa") && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val || "")) nuevosErrores[c] = "Correo inválido";
+      if ((c === "empresa" || c === "jefe") && !val?.trim()) nuevosErrores[c] = "Campo obligatorio";
       if (c === "telefono" && !/^\d{8,12}$/.test(val || "")) nuevosErrores[c] = "Debe tener entre 8 y 12 dígitos numéricos";
-      if ((c === "empresa" || c === "jefe" || c === "carrera") && !val?.trim()) nuevosErrores[c] = "Campo obligatorio";
+      if (c === "correo_empresa" && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val || "")) nuevosErrores[c] = "Correo inválido";
       if (c === "tipo_practica" && !val) nuevosErrores[c] = "Seleccione tipo";
       if (c === "fecha_inicio" && !val) nuevosErrores[c] = "Seleccione fecha";
-      if (before) nuevosErrores[c] = before;
     });
     setErrors(nuevosErrores);
     if (Object.keys(nuevosErrores).length > 0) {
@@ -122,15 +106,29 @@ export default function RegistroPracticas() {
       return;
     }
 
-    // Payload que espera el backend (/api/registro -> registroRutas)
+    // Obtener datos del usuario en sesión (si existe)
+    const usuarioSesion = user || (localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null);
+
+    // Payload: datos de la empresa + datos del usuario automáticamente si hay sesión
     const payload = {
       empresa: form.empresa,
-      jefe: form.jefe,
-      telefono: form.telefono,
-      correo_empresa: form.correo_empresa,
-      tipo_practica: form.tipo_practica,
-      fecha_inicio: form.fecha_inicio, // yyyy-mm-dd
-      correo: form.correo, // para resolver el usuario si no hay auth
+      nombreJefe: form.jefe,
+      telefonoEmpresa: form.telefono,
+      correoEmpresa: form.correo_empresa,
+      tipoPractica: form.tipo_practica,
+      fechaInicio: form.fecha_inicio,
+      fechaTermino: form.fecha_termino,
+      // Incluye referencia al usuario si hay sesión
+      userId: usuarioSesion ? usuarioSesion._id : undefined,
+      // Incluye snapshot de usuario para que el backend lo guarde sin pedirlo al usuario
+      userSnapshot: usuarioSesion
+        ? {
+            nombre: usuarioSesion.nombre,
+            correo: usuarioSesion.correo,
+            carrera: usuarioSesion.carrera,
+            rut: usuarioSesion.rut,
+          }
+        : undefined,
     };
 
     try {
@@ -139,12 +137,8 @@ export default function RegistroPracticas() {
       alert("✅ Práctica registrada correctamente.");
       console.log("Registro creado:", res.data);
 
-      // Reset
+      // Reset del formulario (mantener user en memoria)
       setForm({
-        nombre: "",
-        rut: "",
-        carrera: "",
-        correo: "",
         tipo_practica: "",
         fecha_inicio: "",
         fecha_termino: "",
@@ -173,10 +167,6 @@ export default function RegistroPracticas() {
 
           <form onSubmit={handleSubmit} className={styles.registroForm}>
             {[
-              { id: "nombre", label: "Nombre Alumno", type: "text", placeholder: "Ej: Juan Pérez" },
-              { id: "rut", label: "RUT", type: "text", placeholder: "Ej: 21200157-0" },
-              { id: "carrera", label: "Carrera", type: "text", placeholder: "Ej: Ingeniería Informática" },
-              { id: "correo", label: "Correo", type: "email", placeholder: "Ej: alumno@correo.com" },
               { id: "empresa", label: "Empresa", type: "text", placeholder: "Ej: Banco de Chile" },
               { id: "jefe", label: "Jefe Directo", type: "text", placeholder: "Ej: Carlos Muñoz" },
               { id: "telefono", label: "Contacto Teléfono", type: "tel", placeholder: "Ej: 987654321" },

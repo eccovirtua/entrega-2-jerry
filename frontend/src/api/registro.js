@@ -2,7 +2,7 @@
 import axios from "./axios.js";
 
 // Crear un nuevo registro de práctica
-export const crearRegistro = (data) => axios.post("/registro", data);
+export const crearRegistro = (data) => axios.post("/practicas", data);
 
 // (opcional) Listar registros de práctica
-export const obtenerRegistros = () => axios.get("/registro");
+export const obtenerRegistros = () => axios.get("/practicas");

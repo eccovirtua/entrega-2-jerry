@@ -2,7 +2,7 @@ import express from "express";
 import morgan from "morgan";
 import cors from 'cors';
 import authRutas from './routes/auth.js';
-import practicasRouter from './routes/practicas.js';
+import prodControlador from './controllers/prodControlador.js';
 import reporteRutas from './routes/reporteRutas.js'; //importar rutas de reportes
 import documentosRutas from './routes/documentos.js'; //importar rutas de documentos
 
@@ -19,7 +19,7 @@ app.use(express.json()); // Permite a Express entender JSON
 // Rutas del API
 app.use('/api/auth', authRutas);
 app.use('/api', reporteRutas);
-app.use('/api/practicas', practicasRouter);
+app.use('/api/practicas', prodControlador);
 app.use('/api/documentos', documentosRutas); //usar rutas de documentos
 
 
