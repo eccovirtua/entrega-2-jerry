@@ -29,11 +29,15 @@ const seedDatosIniciales = async () => {
         console.log(">>> Base de datos poblada con datos de reportes.");
 
     } catch (error) {
+
         // El código 11000 es "E11000 duplicate key error" (error de llave duplicada).
+5
         if (error.code === 11000) {
+
             // Esto es un "error" esperado. Significa que los datos ya existen.
             // Lo ignoramos y continuamos con éxito.
             // console.log(">>> Los datos semilla ya existen.");
+            
         } else {
             // Si es un error diferente, sí lo mostramos.
             console.error("Error poblando la base de datos:", error);
