@@ -53,16 +53,35 @@ export const subirDocumento = async (req, res) => {
       return res.status(400).json({ message: 'No se ha subido ningún archivo' });
     }
 
+    if (!alumno || !alumno.trim()) {
+      return res.status(400).json({ message: 'El nombre del alumno es requerido' });
+    }
+
     const nuevoDocumento = new Documento({
-      alumno,
+      alumno: alumno.trim(),
       nombreArchivo: req.file.originalname,
       rutaArchivo: req.file.path,
       subidoPor: req.user.id // Asumiendo que hay middleware de autenticación
     });
 
     const documentoGuardado = await nuevoDocumento.save();
+    
+    // Poblar la información del usuario para la respuesta
+    await documentoGuardado.populate('subidoPor', 'nombre correo');
+    
     res.status(201).json(documentoGuardado);
   } catch (error) {
+    console.error('Error al subir documento:', error);
+    
+    // Si hay error, eliminar el archivo subido para evitar archivos huérfanos
+    if (req.file && fs.existsSync(req.file.path)) {
+      try {
+        fs.unlinkSync(req.file.path);
+      } catch (unlinkError) {
+        console.error('Error al eliminar archivo temporal:', unlinkError);
+      }
+    }
+    
     res.status(400).json({ message: error.message });
   }
 };
