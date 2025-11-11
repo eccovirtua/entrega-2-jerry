@@ -1,7 +1,8 @@
-import Reporte from '../models/reporteModel.js';
+import Reporte from '../models/reporteModel.js'; //importa el modelo de datos
 
+// Habla con la base de datos (usando el Modelo) y le da una respuesta al cliente (el frontend).
 
-const seedDatosIniciales = async () => {
+const seedDatosIniciales = async () => { //funcion asincrona para insertar los datos en mongo en la coleccion
     try {
         const datosSemilla = [
             {
@@ -36,7 +37,7 @@ const seedDatosIniciales = async () => {
 
             // Esto es un "error" esperado. Significa que los datos ya existen.
             // Lo ignoramos y continuamos con éxito.
-            // console.log(">>> Los datos semilla ya existen.");
+            console.log(">>> Los datos semilla ya existen.");
             
         } else {
             // Si es un error diferente, sí lo mostramos.
@@ -45,13 +46,11 @@ const seedDatosIniciales = async () => {
     }
 };
 
-/*
- * Controlador para OBTENER TODOS los reportes (para la tabla).
- */
+//funcion que se exporta para que pueda ser usada por el archivo de rutas
 export const getReportes = async (req, res) => {
     try {
         // 1. Siempre llamamos a la función semilla.
-        //    (Es segura, solo insertará si la BD está vacía).
+    
         await seedDatosIniciales();
 
         // 2. Buscamos los reportes (ahora garantizado que solo hay 3).
@@ -65,7 +64,6 @@ export const getReportes = async (req, res) => {
 
 /*
  * Controlador para OBTENER LOS DATOS DE UN GRÁFICO (por ID).
- * (Esta función no cambia)
  */
 export const getGraficoReporte = async (req, res) => {
     try {

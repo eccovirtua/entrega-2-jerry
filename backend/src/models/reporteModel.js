@@ -1,5 +1,8 @@
 import mongoose from 'mongoose';
 
+
+//modelo de datos que terminan en la coleccion de Mongo
+
 const reporteSchema = new mongoose.Schema({
     nombre: {
         type: String,

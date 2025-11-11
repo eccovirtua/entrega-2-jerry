@@ -7,21 +7,24 @@ import styles from './Inicio.module.css';
 // 1. IMPORTAMOS LAS NUEVAS FUNCIONES DE API
 import { getReportesRequest, getGraficoRequest } from '../api/reportes.js';
 
+
+
+//inicializacion de estados
 const ReportesPage = () => {
-
     const [semestreActivo, setSemestreActivo] = useState(null); // Guardará el _id de Mongo
-    const chartRef = useRef(null);
+    const chartRef = useRef(null); //para que el <canvas> sepa donde dibujar el grafico
     const chartInstanceRef = useRef(null);
-
     // 2. Estado para guardar los datos que vienen de MongoDB
     const [datosTabla, setDatosTabla] = useState([]);
-    const [error, setError] = useState(null); // Estado para manejar errores
+    const [error, setError] = useState(null); //manejar errores
+
+
 
     // 3. useEffect para cargar la TABLA (se ejecuta 1 vez al cargar la página)
     useEffect(() => {
         async function cargarReportes() {
             try {
-                const res = await getReportesRequest(); // Llama a GET /api/reportes
+                const res = await getReportesRequest(); // Llama a GET /api/reportes (pausa la ejecucion hasta que el backend responda)
                 setDatosTabla(res.data); // Guarda los datos de Mongo en el estado
             } catch (error) {
                 console.error("Error cargando reportes:", error);
@@ -31,8 +34,11 @@ const ReportesPage = () => {
         cargarReportes();
     }, []); // El [] vacío asegura que solo se ejecute al montar
 
+
+
     // 4. useEffect para cargar el GRÁFICO (se ejecuta CADA VEZ que 'semestreActivo' cambia)
     useEffect(() => {
+
         // Destruye el gráfico anterior
         if (chartInstanceRef.current) {
             chartInstanceRef.current.destroy();
@@ -56,7 +62,7 @@ const ReportesPage = () => {
                             datasets: [{
                                 label: `Reporte ${res.data.nombre}`, // <-- Dato de Mongo
                                 data: res.data.datosGrafico,       // <-- Dato de Mongo
-                                backgroundColor: "rgba(54, 162, 235, 0.6)",
+                                backgroundColor: "rgba(235, 54, 54, 0.6)",
                             }]
                         },
                         options: {
@@ -84,9 +90,11 @@ const ReportesPage = () => {
         };
     }, [semestreActivo]); // Depende de 'semestreActivo'
 
+
     // 5. El handler ahora guarda el _id de Mongo
     const handleClickSemestre = (id) => {
-        setSemestreActivo(id);
+        setSemestreActivo(id); //Al llamar a setSemestreActivo, el estado cambia, y
+        //  vuelve a ejecutar el Efecto 2, llamando a la api del grafico y que se dibuje el nuevo grafico.
     };
 
 
